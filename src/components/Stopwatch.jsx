@@ -1,73 +1,77 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from 'react';
 
-const StopwatchPage = () => {
-  const [time, setTime] = useState(0);
-  const [timerRunning, setTimerRunning] = useState(false);
-  const [splits, setSplits] = useState([]);
-
-  const formatTime = (timeInMilliseconds) => {
-    const hours = Math.floor(timeInMilliseconds / 3600000);
-    const minutes = Math.floor((timeInMilliseconds % 3600000) / 60000);
-    const seconds = Math.floor((timeInMilliseconds % 60000) / 1000);
-    const milliseconds = timeInMilliseconds % 1000;
-  
-    return `${hours}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}:${String(milliseconds).padStart(3, "0")}`;
-  };
+function Stopwatch() {
+  const [isRunning, setIsRunning] = useState(false);
+  const [elapsedTime, setElapsedTime] = useState(0);
+  const [splitTimes, setSplitTimes] = useState([]);
+  const intervalIdRef = useRef(null);
+  const startTimeRef = useRef(0);
 
   useEffect(() => {
-    let interval;
-    if (timerRunning) {
-      interval = setInterval(() => {
-        setTime((prevTime) => prevTime + 1);
-      }, 1);
-    } else {
-      clearInterval(interval);
+    if (isRunning) {
+      intervalIdRef.current = setInterval(() => {
+        setElapsedTime(Date.now() - startTimeRef.current);
+      }, 10);
     }
 
-    return () => clearInterval(interval);
-  }, [timerRunning]);
+    return () => clearInterval(intervalIdRef.current);
+  }, [isRunning]);
 
-  const handleStart = () => {
-    setTimerRunning(true);
-  };
+  function start() {
+    setIsRunning(true);
+    startTimeRef.current = Date.now() - elapsedTime;
+  }
 
-const handlePause = () => {
-    setTimerRunning(false);
-  };
+  function stop() {
+    setIsRunning(false);
+  }
 
-  const handleSplit = () => {
-    setSplits((prevSplits) => [...prevSplits, time]);
-  };
+  function reset() {
+    setElapsedTime(0);
+    setIsRunning(false);
+    setSplitTimes([]);
+  }
 
-  const handleReset = () => {
-    setTime(0);
-    setTimerRunning(false);
-    setSplits([]);
-  };
+  function split() {
+    setSplitTimes([...splitTimes, elapsedTime]);
+  }
+
+  function formatTime(time) {
+    let hours = Math.floor(time / (1000 * 60 * 60));
+    let minutes = Math.floor((time / (1000 * 60)) % 60);
+    let seconds = Math.floor(time / 1000 % 60);
+    let milliseconds = Math.floor((time % 1000) / 10);
+
+    hours = String(hours).padStart(2, '0');
+    minutes = String(minutes).padStart(2, '0');
+    seconds = String(seconds).padStart(2, '0');
+    milliseconds = String(milliseconds).padStart(2, '0');
+
+    return `${hours}:${minutes}:${seconds}.${milliseconds}`;
+  }
 
   return (
-    <div className="stopwatch-page">
-      <h1>Stopwatch</h1>
-      <h2>{formatTime(time)}</h2>
-      <div className="stopwatch-controls">
-        {timerRunning ? (
-          <button onClick={handlePause}>Pause</button>
+    <div className='stopwatch'>
+      <div className='display'>{formatTime(elapsedTime)}</div>
+      <div className='controls'>
+        {isRunning ? (
+          <button onClick={stop} className='stop-button'>Stop</button>
         ) : (
-          <button onClick={handleStart}>Start</button>
+          <button onClick={start} className='start-button'>Start</button>
         )}
-        <button onClick={handleSplit}>Split</button>
-        <button onClick={handleReset}>Reset</button>
+        <button onClick={reset} className='reset-button' disabled={isRunning}>Reset</button>
+        <button onClick={split} className='split-button' disabled={!isRunning}>Split</button>
       </div>
-      <div className="split-times">
-        <h3>Splits:</h3>
-        <ul>
-          {splits.map((split, index) => (
-            <li key={index}>{formatTime(split)}</li>
+      <div className='split-times'>
+        <h3>Split Times</h3>
+        <ol type='1'>
+          {splitTimes.map((time, index) => (
+            <li key={index}>{formatTime(time)}</li>
           ))}
-        </ul>
+        </ol>
       </div>
     </div>
   );
-};
+}
 
-export default StopwatchPage;
+export default Stopwatch;

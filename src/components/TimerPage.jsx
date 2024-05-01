@@ -1,56 +1,56 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useRef, useEffect } from 'react';
 
-const TimerPage = () => {
-  const [time, setTime] = useState(20); 
-  const [timerRunning, setTimerRunning] = useState(false);
+function Timer() {
+  const [time, setTime] = useState(10);
+  const [isRunning, setIsRunning] = useState(false);
+  const intervalRef = useRef(null);
 
   useEffect(() => {
-    let interval;
-    if (timerRunning) {
-      interval = setInterval(() => {
-        setTime((prevTime) => {
-          if (prevTime > 0) {
-            return prevTime - 1;
-          } else {
-            setTimerRunning(false);
-            return 0;
-          }
-        });
-      }, 1000);
-    } else {
-      clearInterval(interval);
+    if (time === 0) {
+      clearInterval(intervalRef.current);
+      setIsRunning(false);
     }
+  }, [time]);
 
-    return () => clearInterval(interval);
-  }, [timerRunning]);
+  function start() {
+    setIsRunning(true);
+    clearInterval(intervalRef.current);
+    intervalRef.current = setInterval(() => {
+      setTime(prevTime => prevTime - 1);
+    }, 1000);
+  }
 
-  const formatTime = (timeInSeconds) => {
+  function stop() {
+    setIsRunning(false);
+    clearInterval(intervalRef.current);
+  }
+
+  function reset() {
+    setTime(10);
+    setIsRunning(false);
+  }
+
+  function formatTime(timeInSeconds) {
     const hours = Math.floor(timeInSeconds / 3600);
     const minutes = Math.floor((timeInSeconds % 3600) / 60);
     const seconds = timeInSeconds % 60;
 
-    return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
-  };
-
-  const handleToggle = () => {
-    setTimerRunning((prevRunning) => !prevRunning);
-  };
-
-  const handleReset = () => {
-    setTime(20); 
-    setTimerRunning(false);
-  };
+    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  }
 
   return (
-    <div className="timer-page">
-      <h1>Timer</h1>
-      <h2>{formatTime(time)}</h2>
-      <div className="timer-controls">
-        <button onClick={handleToggle} disabled={time === 0}>{timerRunning ? "Pause" : "Start"}</button>
-        <button onClick={handleReset}>Reset</button>
+    <div className='timer'>
+      <div className='display'>{formatTime(time)}</div>
+      <div className='controls'>
+        {!isRunning ? (
+          <button onClick={start} className='start-button'>Start</button>
+        ) : (
+          <button onClick={stop} className='stop-button'>Stop</button>
+        )}
+        <button onClick={reset} className='reset-button' disabled={isRunning }>Reset</button>
       </div>
     </div>
   );
-};
+}
 
-export default TimerPage;
+export default Timer;

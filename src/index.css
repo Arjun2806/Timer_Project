@@ -26,6 +26,30 @@
   text-decoration: underline;
 }
 
+.welcome{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.welcome h1 {
+  font-size: 5rem;
+  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-weight: bold;
+  color:black
+}
+
+.welcome img {
+  width: 500px;
+  height: 500px;
+}
+
+
+
+
+
+
 .timer-page {
   display: flex;
   flex-direction: column;
@@ -33,67 +57,132 @@
   justify-content: center;
 }
 
-.timer-page h1 {
-  font-size: 2rem;
+.timer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px;
 }
 
-.timer-page h2 {
-  font-size: 9.7rem;
+.display {
+  font-size: 5rem;
+  font-family: monospace;
+  font-weight: bold;
+  color:black
+}
+.timer-page button {
+  background-color: #7ea1e7;
+  color: #ffffff;
+  padding: 0.5rem 1rem;
+  margin: 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: background-color 0.4s ease-in-out;
+  height: 5rem;
+  width: 5rem;
+  border-radius: 50%;
+}
+
+.timer-controls {
+  background-color: #7ea1e7;
+  color: #ffffff;
+  padding: 0.5rem 1rem;
+  margin: 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: background-color 0.4s ease-in-out;
+  height: 5rem;
+  width: 5rem;
+  border-radius: 50%;
 }
 
 .timer-page button {
   background-color: #7ea1e7;
   color: #ffffff;
   padding: 0.5rem 1rem;
+  margin: 1rem;
   border: none;
   border-radius: 0.5rem;
   cursor: pointer;
   font-size: 1.2rem;
   transition: background-color 0.4s ease-in-out;
+  height: 5rem;
+  width: 5rem;
+  border-radius: 50%;
 }
-
-.timer-controls {
-  display: flex;
-  justify-content: space-between;
-}
-
 
 .timer-page button:hover {
   background-color: #ec9f1a;
 }
 
-.stopwatch-page {
-  text-align: center;
-  padding: 20px;
+.timer-page button:disabled {
+  background-color: #e01c19;
+  cursor: not-allowed;
 }
 
-.stopwatch-controls {
-  margin-top: 20px;
+.stopwatch {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px;
 }
 
-.stopwatch-controls button {
-  margin-right: 10px;
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
-  background-color: #7ea1e7;
+.display {
+  font-size: 5rem;
+  font-family: monospace;
+  font-weight: bold;
+  color:black
+}
+
+.controls button {
   color: #ffffff;
+  padding: 0.5rem 1rem;
+  margin: 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-size: 1.5rem;
+  transition: background-color 0.4s ease;
 }
 
-.split-times {
-  margin-top: 20px;
+.start-button {
+  background-color: #68f555;
 }
 
-.split-times h3 {
-  margin-bottom: 10px;
+.start-button:hover {
+  background-color: #3bda26;
 }
 
-.split-times ul {
-  list-style: none;
-  padding: 0;
+.stop-button {
+  background-color: #e75336;
 }
 
-.split-times ul li {
-  margin-bottom: 5px;
+.stop-button:hover {
+  background-color: #d62d1f;
 }
 
+.split-button {
+  background-color: #54d3e9;
+} 
+
+.split-button:hover {
+  background-color: #19b1e4;
+}
+
+
+.reset-button {
+  background-color:#e5e844;
+}
+
+.reset-button:hover {
+  background-color: #e7f309;
+}
+
+button:disabled {
+  opacity: 0.3; 
+  cursor: not-allowed; 
+}
