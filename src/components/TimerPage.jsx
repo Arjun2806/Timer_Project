@@ -43,11 +43,11 @@ function Timer() {
       <div className='display'>{formatTime(time)}</div>
       <div className='controls'>
         {!isRunning ? (
-          <button onClick={start} className='start-button'>Start</button>
+          <button onClick={start} className='start-button' disabled={time === 0}>Start</button>
         ) : (
           <button onClick={stop} className='stop-button'>Stop</button>
         )}
-        <button onClick={reset} className='reset-button' disabled={isRunning }>Reset</button>
+        <button onClick={reset} className='reset-button' disabled={isRunning}>Reset</button>
       </div>
     </div>
   );
