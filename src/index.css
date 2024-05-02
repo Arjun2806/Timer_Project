@@ -46,10 +46,6 @@
 }
 
 
-
-
-
-
 .timer-page {
   display: flex;
   flex-direction: column;
@@ -70,23 +66,20 @@
   font-weight: bold;
   color:black
 }
-.timer-page button {
-  background-color: #7ea1e7;
-  color: #ffffff;
-  padding: 0.5rem 1rem;
-  margin: 1rem;
-  border: none;
-  border-radius: 0.5rem;
-  cursor: pointer;
+
+
+.timer-page input{
+  background-color: #e5e6e9;
+  color:black;
+  border: solid 1px #7ea1e7;
+  padding: 0.8rem 1rem;
   font-size: 1.2rem;
-  transition: background-color 0.4s ease-in-out;
-  height: 5rem;
-  width: 5rem;
-  border-radius: 50%;
+  font-family: monospace;
+  width:15rem;
+
 }
 
 .timer-controls {
-  background-color: #7ea1e7;
   color: #ffffff;
   padding: 0.5rem 1rem;
   margin: 1rem;
@@ -100,20 +93,6 @@
   border-radius: 50%;
 }
 
-.timer-page button {
-  background-color: #7ea1e7;
-  color: #ffffff;
-  padding: 0.5rem 1rem;
-  margin: 1rem;
-  border: none;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  font-size: 1.2rem;
-  transition: background-color 0.4s ease-in-out;
-  height: 5rem;
-  width: 5rem;
-  border-radius: 50%;
-}
 
 .timer-page button:hover {
   background-color: #ec9f1a;
